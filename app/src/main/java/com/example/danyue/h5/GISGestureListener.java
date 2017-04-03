@@ -14,6 +14,7 @@ public class GISGestureListener extends GestureDetector.SimpleOnGestureListener 
     @Override
     public boolean onDown(MotionEvent e) {
         Log.d(TAG, "onDown: "+e.getX()+","+e.getY());
+
         return super.onDown(e);
     }
 
