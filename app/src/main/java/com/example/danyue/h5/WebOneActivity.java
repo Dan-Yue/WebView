@@ -5,24 +5,23 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Toast;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class WebOneActivity extends Activity {
     private static final String TAG = "*WebOneActivity";
+    private boolean isREad = true;
     private String id;
     private WebView webview;
     //    private RelativeLayout parent;
@@ -54,16 +53,21 @@ public class WebOneActivity extends Activity {
                 webview.clearCache(true);
             }
         });
-        webview.loadUrl("http://www.toutiao.com/i" + id + "/");
-    }
+        webview.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                if (newProgress == 100 && isREad) {
+                    if (finalI == MainActivity.readEnd + 1) {
+                        finalI = 0;
+                    }
+                    setScrollRead();
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (finalI == MainActivity.readEnd + 1) {
-            finalI = 0;
-        }
-        setScrollRead();
+                    isREad = false;
+                }
+                super.onProgressChanged(view, newProgress);
+            }
+        });
+        webview.loadUrl("http://www.toutiao.com/i" + id + "/");
     }
 
     @Override
@@ -166,7 +170,7 @@ public class WebOneActivity extends Activity {
 
                 @Override
                 public void run() {
-                    Log.d(TAG, "run: readEnd = "+MainActivity.readEnd);
+                    Log.d(TAG, "run: readEnd = " + MainActivity.readEnd);
                     if (finalI < 19) {
                         webview.setScrollY(100 * finalI);
                     } else if (finalI == 19) {

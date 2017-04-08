@@ -5,25 +5,23 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Button;
-import android.widget.Toast;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class WebTwoActivity extends Activity {
     private static final String TAG = "*WebTwoActivity";
+    private boolean isRead = true;
     private String id;
     private WebView webview;
     //    private RelativeLayout parent;
@@ -55,16 +53,20 @@ public class WebTwoActivity extends Activity {
                 webview.clearCache(true);
             }
         });
+        webview.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                if (newProgress == 100 && isRead) {
+                    if (finalI == MainActivity.readEnd + 1) {
+                        finalI = 0;
+                    }
+                    setScrollRead();
+                    isRead = false;
+                }
+                super.onProgressChanged(view, newProgress);
+            }
+        });
         webview.loadUrl("http://www.toutiao.com/i" + id + "/");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (finalI == MainActivity.readEnd + 1) {
-            finalI = 0;
-        }
-        setScrollRead();
     }
 
     @Override
