@@ -15,7 +15,7 @@ import java.util.Timer;
 
 public class MainActivity extends Activity {
     public static int activityNum = 0;
-    final public static int readEnd = 70;
+    final public static int readEnd = 75;
 
     private ListView listView;
     private EditText editText;
