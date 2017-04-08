@@ -13,6 +13,7 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -41,14 +42,22 @@ public class WebTwoActivity extends Activity {
 //        parent = (RelativeLayout) findViewById(R.id.web_gruop);
 
         webview.getSettings().setJavaScriptEnabled(true);
+        webview.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
         webview.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 return false;
             }
+
+            @Override
+            public void doUpdateVisitedHistory(WebView view, String url, boolean isReload) {
+                webview.clearHistory();
+                webview.clearCache(true);
+            }
         });
         webview.loadUrl("http://www.toutiao.com/i" + id + "/");
     }
+
     @Override
     protected void onResume() {
         super.onResume();

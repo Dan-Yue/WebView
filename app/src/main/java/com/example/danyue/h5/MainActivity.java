@@ -15,7 +15,8 @@ import java.util.Timer;
 
 public class MainActivity extends Activity {
     public static int activityNum = 0;
-    final public static int readEnd = 75;
+    final public static int readEnd = LoginActivity.Set_View_Long;
+
 
     private ListView listView;
     private EditText editText;
