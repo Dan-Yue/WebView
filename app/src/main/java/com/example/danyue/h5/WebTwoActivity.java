@@ -123,7 +123,6 @@ public class WebTwoActivity extends Activity {
 
     }
 
-
     //得到网页点击的坐标
     static short click;
 
