@@ -80,7 +80,7 @@ public class WebOneActivity extends Activity {
     private void setScrollRead() {
 //        webview.setScrollY(1904);
         task.run();
-        timer.schedule(task, 200, 200);
+        timer.schedule(task, MainActivity.readTime, MainActivity.readTime);
     }
 
     //模拟点击

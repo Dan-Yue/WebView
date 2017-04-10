@@ -16,6 +16,7 @@ import java.util.Timer;
 public class MainActivity extends Activity {
     public static int activityNum = 0;
     final public static int readEnd = LoginActivity.Set_View_Long;
+    final public static int readTime = LoginActivity.Set_View_Time;
 
 
     private ListView listView;
